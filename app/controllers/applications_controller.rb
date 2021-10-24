@@ -27,6 +27,11 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
     @pets = ApplicationPet.match(params)
 
+    if params[:reason].present?
+      @application.reason = params[:reason]
+      @application.status = "Pending"
+    end
+
     if params[:name].nil?
       @matching_pets = []
     else
