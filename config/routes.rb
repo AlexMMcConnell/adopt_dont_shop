@@ -42,4 +42,7 @@ Rails.application.routes.draw do
   get '/applications/:id', to: 'applications#show'
 
   post '/application_pets', to: 'application_pets#create'
+
+  # NOT RESTFUL, need to figure out how to change
+  get '/admin/shelters', to: 'admin#shelters'
 end

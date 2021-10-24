@@ -31,4 +31,19 @@ class Shelter < ApplicationRecord
   def shelter_pets_filtered_by_age(age_filter)
     adoptable_pets.where('age >= ?', age_filter)
   end
+
+  def self.pending_applications
+    self.all.map do |shelter|
+      pets = Pet.where(shelter_id: shelter.id)
+      @matching_applications = []
+      pets.each do |pet|
+        @matching_applications << ApplicationPet.where(pet_id: pet.id)
+      end
+      if @matching_applications.present?
+        shelter
+      else
+        nil
+      end
+    end.compact
+  end
 end
