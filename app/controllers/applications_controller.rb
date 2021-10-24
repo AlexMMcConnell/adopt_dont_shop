@@ -14,8 +14,14 @@ class ApplicationsController < ApplicationController
       zip_code: params[:zip_code],
       status: 'In Progress'
     )
-    application.save
-    redirect_to "/applications/#{application.id}"
+    binding.pry
+    if !params.values.include?("")
+      application.save
+      redirect_to "/applications/#{application.id}"
+    else
+      redirect_to "/applications/new"
+      flash.alert = "Must fill out all fields to continue."
+    end
   end
 
   def show
