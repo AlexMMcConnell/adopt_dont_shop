@@ -1,8 +1,24 @@
 <h1>Application <%= @application.id %></h1>
 <h3>Name: <%= @application.name %></h3>
 <h3>Lives at <%= @application.street_address %>, <%= @application.city %>, <%= @application.state %>, <%= @application.zip_code %></h3>
-<h3>Why <%= @application.name %> would be a good home for the given pet: They created an application.</h3>
+<h3>Why <%= @application.name %> would be a good home for the given pet: </h3>
 <h3>Application Status: <%= @application.status %></h3>
+<h4>Pets on Application:</h4>
 <% @pets.each do |pet| %>
   <a href="/pets/<%= pet.id %>"><%= pet.name %></a>
+<% end %>
+<p>------------------------------------</p>
+<%= form_with url: "/applications/#{@application.id}", local: :true, method: :get do |form| %>
+<%= form.label :name, "Pet name to search for:" %>
+<%= form.text_field :name %>
+<%= form.submit("Search") %>
+<% end %>
+
+<% @matching_pets.each do |pet| %>
+  <%= form_with url: "/application_pets", local: :true, method: :post do |form| %>
+  <%= form.label :adopt, "#{pet.name}"%>
+  <%= form.hidden_field :pet_id, value: pet.id %>
+  <%= form.hidden_field :app_id, value: @application.id %>
+  <%= form.submit("Adopt this Pet") %>
+  <% end %>
 <% end %>
