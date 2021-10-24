@@ -13,4 +13,12 @@ RSpec.describe 'application_creation' do
     expect(page).to have_content('Joe Smith')
     expect(page).to_not have_content('New Application')
   end
+
+  it 'says to fill all fields if no fields are filled in' do
+    application = Application.create(name: 'Bob Smith', street_address: '321 Eve Way', city: 'Aurora', state: 'Colorado')
+    visit "/applications/new"
+    click_button('Save')
+
+    expect(page).to have_content("Must fill out all fields to continue.")
+  end
 end
