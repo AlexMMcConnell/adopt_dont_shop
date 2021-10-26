@@ -34,7 +34,7 @@ class Shelter < ApplicationRecord
 
   def self.pending_applications
     self.all.map do |shelter|
-      pets = Pet.where(shelter_id: shelter.id)
+      pets = shelter.pets
       @matching_applications = []
       pets.each do |pet|
         @matching_applications << ApplicationPet.where(pet_id: pet.id)
