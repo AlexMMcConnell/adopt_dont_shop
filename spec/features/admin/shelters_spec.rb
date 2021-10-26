@@ -10,6 +10,7 @@ RSpec.describe 'shelter_index' do
     Pet.create(adoptable: true, age: 7, breed: 'Husky', name: 'Snowy', shelter_id: shelter1.id)
     ApplicationPet.create(pet_id: pet1.id, application_id: application.id)
   end
+
   it 'shows shelters in reverse alphabetical order' do
     visit "/admin/shelters"
 
@@ -19,7 +20,7 @@ RSpec.describe 'shelter_index' do
 
   it 'only shows shelters with pending applications under the corresponding section' do
     visit "/admin/shelters"
-    
+
     expect(page).to have_content('Dumb Friends League').twice
     expect(page).to_not have_content('Pets for Pals').twice
     expect(page).to_not have_content('Cats and Dogs').twice
