@@ -68,4 +68,17 @@ RSpec.describe Shelter, type: :model do
       end
     end
   end
+
+  describe 'pending_applications' do
+    before(:each) do
+      @application = Application.create!(name: 'Bob Smith', street_address: '321 Eve Way', city: 'Aurora', state: 'Colorado', zip_code: '80222', status: "Pending")
+      ApplicationPet.create!(application: @application, pet: @pet_1)
+      ApplicationPet.create!(application: @application, pet: @pet_2)
+    end
+
+    it 'only returns shelters with pending applications' do
+      expect(Shelter.pending_applications).to eq([@shelter_1])
+      expect(Shelter.pending_applications).to_not include(@shelter_2, @shelter_3)
+    end
+  end
 end
