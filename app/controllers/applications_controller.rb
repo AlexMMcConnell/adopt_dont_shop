@@ -15,9 +15,9 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  def show # THIS IS NOT Restful, needs to change accordingly once done with applying for pets section
+  def show
     @application = Application.find(params[:id])
-    @pets = ApplicationPet.match(params)
+    @pets = @application.pets
 
     if params[:reason].present?
       @application.reason = params[:reason]
