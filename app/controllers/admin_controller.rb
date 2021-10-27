@@ -7,6 +7,7 @@ class AdminController < ApplicationController
   def applications
     @application = Application.find(params[:id])
     @pets = @application.pets
+    @application.check_if_completed
   end
 
   def submit
