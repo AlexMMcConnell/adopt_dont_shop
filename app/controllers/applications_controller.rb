@@ -17,22 +17,11 @@ class ApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
-    @pets = @application.pets
-
-    if params[:reason].present?
-      @application.reason = params[:reason]
-      @application.status = "Pending"
-    end
-
-    if params[:name].nil?
-      @matching_pets = []
-    else
-      @matching_pets = Pet.where(name: params[:name])
-    end
+    @application.add_reason(params)
   end
 
   private
   def application_params
-    params.permit(:name, :street_address, :city, :state, :zip_code)
+    params.permit(:name, :street_address, :city, :state, :zip_code, :id)
   end
 end
