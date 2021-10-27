@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.describe 'shelter_index' do
   before(:each) do
     shelter1 = Shelter.create(foster_program: true, name: 'Dumb Friends League', city: 'Denver', rank: 7)
-    Shelter.create(foster_program: true, name: 'Pets for Pals', city: 'Aurora', rank: 5)
-    Shelter.create(foster_program: false, name: 'Cats and Dogs', city: 'Cenntenial', rank: 6)
-    application = Application.create(name: 'Bob Smith', street_address: '321 Eve Way', city: 'Aurora', state: 'Colorado', zip_code: '80222', status: "In Progress")
+    shelter2 = Shelter.create(foster_program: true, name: 'Pets for Pals', city: 'Aurora', rank: 5)
+    shelter3 = Shelter.create(foster_program: false, name: 'Cats and Dogs', city: 'Cenntenial', rank: 6)
+    application = Application.create(name: 'Bob Smith', street_address: '321 Eve Way', city: 'Aurora', state: 'Colorado', zip_code: '80222', status: "Pending")
     pet1 = Pet.create(adoptable: true, age: 7, breed: 'Golden Retriever', name: 'Brownie', shelter_id: shelter1.id)
-    Pet.create(adoptable: true, age: 7, breed: 'Husky', name: 'Snowy', shelter_id: shelter1.id)
+    pet2 = Pet.create(adoptable: true, age: 7, breed: 'Husky', name: 'Snowy', shelter_id: shelter1.id)
     ApplicationPet.create(pet_id: pet1.id, application_id: application.id)
   end
 
