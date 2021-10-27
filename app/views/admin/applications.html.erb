@@ -1,18 +1,20 @@
 <h1>Application from <%= @application.name %>. Status: <%= @application.status %></h1>
 <% @pets.each do |pet| %>
     <h2><%= "#{pet.name}"%></h2>
-    <% if pet.accepted?(@application.id) == true %>
+    <% if pet.adoptable == false %>
+      <p>Pet has been approved for adoption by another applicant.</p>
+    <% elsif pet.accepted?(@application.id) == true %>
       <p>Pet accepted for this Application</p>
     <% elsif pet.accepted?(@application.id) == nil %>
-      <%= button_to("Accept", "/admin/applications/#{@application.id}/pets/#{pet.id}?q=accept", method: :post) %>
+      <%= button_to("Accept", "/admin/applications/#{@application.id}/pets/#{pet.id}?q=accept", id: "#{pet.name} accept", method: :post) %>
     <% else %>
     <% end %>
 
     <% if pet.accepted?(@application.id) == nil %>
-      <%= button_to("Deny", "/admin/applications/#{@application.id}/pets/#{pet.id}?q=deny", method: :post) %>
+      <%= button_to("Deny", "/admin/applications/#{@application.id}/pets/#{pet.id}?q=deny", id: "#{pet.name} deny", method: :post) %>
     <% elsif pet.accepted?(@application.id) != true %>
-      <p>Pet denied for this Application</p>
+      <p>Pet denied for this application.</p>
     <% else %>
-      <%= button_to("Deny", "/admin/applications/#{@application.id}/pets/#{pet.id}?q=deny", method: :post) %>
+      <%= button_to("Deny", "/admin/applications/#{@application.id}/pets/#{pet.id}?q=deny", id: "#{pet.name} deny", method: :post) %>
     <% end %>
 <% end %>
