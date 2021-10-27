@@ -39,4 +39,23 @@ RSpec.describe Pet, type: :model do
       end
     end
   end
+
+  describe 'accepted' do
+    before(:each) do
+      @app_1 = Application.create!(name: 'Bob Smith', street_address: '321 Eve Way', city: 'Aurora', state: 'Colorado', zip_code: '80222', status: "Pending")
+      @app_2 = Application.create!(name: 'Jane Smith', street_address: '321 Eve Way', city: 'Aurora', state: 'Colorado', zip_code: '80222', status: "Pending")
+      ApplicationPet.create!(application: @app_1, pet: @pet_1, accepted: true)
+      ApplicationPet.create!(application: @app_2, pet: @pet_2, accepted: false)
+    end
+
+    it 'returns true if app_pet is accepted' do
+
+      expect(@pet_1.accepted?(@app_1.id)).to eq(true)
+    end
+
+    it 'returns false if app_pet is denied' do
+
+      expect(@pet_2.accepted?(@app_2.id)).to eq(false)
+    end
+  end
 end
