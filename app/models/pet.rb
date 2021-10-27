@@ -14,6 +14,6 @@ class Pet < ApplicationRecord
   end
 
   def accepted?(app_id)
-    app_pets = ApplicationPet.find_by(pet_id: self.id, application_id: app_id).accepted
+    ApplicationPet.find_by(pet_id: self.id, application_id: app_id).accepted
   end
 end
