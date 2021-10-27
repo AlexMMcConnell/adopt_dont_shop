@@ -32,6 +32,7 @@ class Shelter < ApplicationRecord
     adoptable_pets.where('age >= ?', age_filter)
   end
 
+  # refactor once 100% coverage is hit
   def self.pending_applications
     self.all.map do |shelter|
       pets = shelter.pets
@@ -39,10 +40,9 @@ class Shelter < ApplicationRecord
       pets.each do |pet|
         @matching_applications << ApplicationPet.where(pet_id: pet.id)
       end
+      @matching_applications = @matching_applications.flatten
       if @matching_applications.present?
         shelter
-      else
-        nil
       end
     end.compact
   end
