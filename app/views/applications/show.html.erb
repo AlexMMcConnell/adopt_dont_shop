@@ -4,26 +4,34 @@
 <h3>Why <%= @application.name %> would be a good home for the given pet: <%= @application.reason %></h3>
 <h3>Application Status: <%= @application.status %></h3>
 <h4>Pets on Application:</h4>
-<% @pets.each do |pet| %>
+<% @application.pets.each do |pet| %>
   <a href="/pets/<%= pet.id %>"><%= pet.name %></a>
 <% end %>
 
 <% if @application.status == "In Progress"%>
-  <% if @pets.present?%>
-    <%= form_with url: "/applications/#{@application.id}", local: :true, method: :get do |form| %>
-    <%= form.label :description, "Why would you make a good home for the pet(s) you are applying for?" %>
-    <%= form.text_field :reason %>
-    <%= form.submit("Submit form") %>
-    <% end %>
-  <% end %>
-<p>--------------------------------------------</p>
-  <%= form_with url: "/applications/#{@application.id}", local: :true, method: :get do |form| %>
-    <%= form.label :name, "Pet name to search for:" %>
-    <%= form.text_field :name %>
-    <%= form.submit("Search") %>
+  <% if @application.pets.present?%>
+    <%= render partial: 'form', locals: {
+      method: :get,
+      path: "/applications/#{@application.id}",
+      name1: 'description',
+      label_text: "Why would you make a good home for the pet(s) you are applying for?",
+      name2: 'reason',
+      button_text: 'Submit form'
+    } %>
   <% end %>
 
-  <% @matching_pets.each do |pet| %>
+<p>--------------------------------------------</p>
+
+<%= render partial: 'form', locals: {
+  method: :get,
+  path: "/applications/#{@application.id}",
+  name1: 'name',
+  label_text: "Pet name to search for",
+  name2: 'name',
+  button_text: 'Search'
+} %>
+
+  <% @application.show_pets(params).each do |pet| %>
     <%= form_with url: "/application_pets", local: :true, method: :post do |form| %>
     <%= form.label :adopt, "#{pet.name}"%>
     <%= form.hidden_field :pet_id, value: pet.id %>
